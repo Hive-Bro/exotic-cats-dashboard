@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ochre: #c17817;
+  --color-ochre-dark: #9a5f10;
+  --color-khaki: #c2b280;
+  --color-khaki-light: #d9ceab;
+  --color-charcoal: #2e2e2e;
+  --color-charcoal-light: #4a4a4a;
+  --color-ivory: #f5f0e8;
+  --color-ivory-dark: #e8e0d0;
+  --color-parchment: #faf6ee;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  position: relative;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Masonry layout */
+.masonry {
+  columns: 1;
+  column-gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .masonry {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry {
+    columns: 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .masonry {
+    columns: 4;
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+
+/* Shuffle animation */
+@keyframes scatter {
+  0% {
+    transform: rotate(0deg) translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: rotate(var(--scatter-rotate, 3deg)) translate(var(--scatter-x, 10px), var(--scatter-y, -8px)) scale(0.96);
+    opacity: 0.7;
+  }
+  100% {
+    transform: rotate(0deg) translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.scatter {
+  animation: scatter 0.6s ease-in-out;
+}
